@@ -185,15 +185,10 @@ Renderer must be a subclass of MimetypeRenderer or ExternalRenderer.
             r for r in self._to_activate if cls and isinstance(r, cls)
         ]
 
-        while to_activate_with_cls:
-            # Activate renderers from left to right so that right-most
-            # renderers take precedence
-            renderer = to_activate_with_cls.pop(0)
+        # Activate renderers from left to right so that right-most
+        # renderers take precedence
+        for renderer in to_activate_with_cls:
             renderer.activate()
-
-        self._to_activate = [
-            r for r in self._to_activate if not (cls and isinstance(r, cls))
-        ]
 
     def _validate_coerce_renderers(self, renderers_string):
         """
